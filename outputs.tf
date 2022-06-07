@@ -42,8 +42,3 @@ output "aks_cluster_name" {
 output "aks_cluster_kubernetes_version" {
   value = azurerm_kubernetes_cluster.aks_cluster.kubernetes_version
 }
-
-# APplication Ip
-output "application_ip_address" {
-  value = azurerm_public_ip.public_ip.ip_address
-}
