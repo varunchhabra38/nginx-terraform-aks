@@ -43,7 +43,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     }
     ingress_application_gateway  {
       enabled   = true
-      subnet_cidr = var.app_gateway_subnet_address_prefix
+      subnet_cidr = data.azurerm_subnet.appgwsubnet.id
       gateway_name = "ingress-app-gateway"
     }
   }
