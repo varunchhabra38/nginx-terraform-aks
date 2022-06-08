@@ -15,7 +15,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     min_count            = 1
     os_disk_size_gb      = 30
     type                 = "VirtualMachineScaleSets"
-    vnet_subnet_id        = data.azurerm_subnet.kubesubnet.id 
+    vnet_subnet_id        = azurerm_subnet.aks_subnet.id 
     node_labels = {
       "nodepool-type"    = "system"
       "environment"      = "dev"
@@ -35,23 +35,29 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 
 
-  oms_agent {
+# Add On Profiles
+  addon_profile {
+    azure_policy {enabled =  true}
+    oms_agent {
+      enabled =  true
       log_analytics_workspace_id = azurerm_log_analytics_workspace.insights.id
     }
- 
-
-  azure_policy_enabled=true
-
-  ingress_application_gateway  {
-      subnet_cidr = var.app_gateway_subnet_address_prefix
-      gateway_name = "ingress-app-gateway-${var.environment}"
+    ingress_application_gateway  {
+			enabled                    = true 
+			subnet_id               = azurerm_subnet.appgwsubnet.id 
+			gateway_name            = var.app_gateway_name
+		}
   }
+
 # RBAC and Azure AD Integration Block
-  azure_active_directory_role_based_access_control {
-    managed = true
-    admin_group_object_ids = [azuread_group.aks_administrators.id]
-    azure_rbac_enabled =true
+  role_based_access_control {
+    enabled = true
+    azure_active_directory {
+      managed = true
+      admin_group_object_ids = [azuread_group.aks_administrators.id]
+    }
   }
+
 
 
 # Linux Profile
@@ -71,4 +77,5 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   tags = {
     Environment = "dev"
   }
+
 }

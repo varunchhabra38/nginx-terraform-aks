@@ -41,11 +41,15 @@ variable "app_gateway_subnet_address_prefix" {
 }
 variable "aks_subnet_name" {
   description = "Subnet Name."
-  default     = "kubesubnet"
+  default     = "aks_subnet"
+}
+variable "appgateway_subnet_name" {
+  description = "Subnet Name."
+  default     = "appgwsubnet"
 }
 variable "app_gateway_name" {
   description = "Name of the Application Gateway"
-  default     = "ApplicationGateway1"
+  default     = "ingress-app-gateway"
 }
 
 variable "app_gateway_sku" {
