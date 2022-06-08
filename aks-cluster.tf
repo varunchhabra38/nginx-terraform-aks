@@ -45,7 +45,7 @@ oms_agent {
 
   ingress_application_gateway  {
       subnet_id = data.azurerm_subnet.appgwsubnet.id
-      gateway_name = "ingress-app-gateway"
+      gateway_name = "ingress-app-gateway-${var.environment}"
   }
 # RBAC and Azure AD Integration Block
   azure_active_directory_role_based_access_control {
