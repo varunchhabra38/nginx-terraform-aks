@@ -12,7 +12,7 @@ resource "azurerm_subnet" "aks_subnet" {
 }
  
 resource "azurerm_subnet" "appgwsubnet" {
-   name = var.appgwsubnet
+   name = var.appgateway_subnet_name
    resource_group_name  = azurerm_resource_group.aks_rg.name
    virtual_network_name = azurerm_virtual_network.aksvnet.name
    address_prefixes = [var.app_gateway_subnet_address_prefix]
