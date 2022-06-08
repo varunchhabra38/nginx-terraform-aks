@@ -41,13 +41,12 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
       enabled =  true
       log_analytics_workspace_id = azurerm_log_analytics_workspace.insights.id
     }
-    ingress_application_gateway  {
+  }
+  ingress_application_gateway  {
       enabled   = true
       subnet_id = data.azurerm_subnet.appgwsubnet.id
       gateway_name = "ingress-app-gateway"
     }
-  }
-
 # RBAC and Azure AD Integration Block
   role_based_access_control {
     enabled = true
