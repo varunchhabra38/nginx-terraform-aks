@@ -35,8 +35,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 
 
-oms_agent {
-
+  oms_agent {
       log_analytics_workspace_id = azurerm_log_analytics_workspace.insights.id
     }
  
@@ -44,7 +43,7 @@ oms_agent {
   azure_policy_enabled=true
 
   ingress_application_gateway  {
-      subnet_id = data.azurerm_subnet.appgwsubnet.id
+      subnet_cidr = var.app_gateway_subnet_address_prefix
       gateway_name = "ingress-app-gateway-${var.environment}"
   }
 # RBAC and Azure AD Integration Block
