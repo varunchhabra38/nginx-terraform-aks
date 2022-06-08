@@ -34,17 +34,14 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     type = "SystemAssigned"
   }
 
-# Add On Profiles
-  addon_profile {
-       oms_agent {
-      enabled =  true
+
+oms_agent {
+
       log_analytics_workspace_id = azurerm_log_analytics_workspace.insights.id
     }
-  }
+ 
 
-  azure_policy_enabled{
-
-  }
+  azure_policy_enabled=true
 
   ingress_application_gateway  {
       subnet_id = data.azurerm_subnet.appgwsubnet.id
